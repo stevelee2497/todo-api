@@ -20,33 +20,33 @@ namespace Todo.API.Controllers
         }
 
         [HttpGet]
-        public Task<List<TodoItem>> Get()
+        public Task<List<TodoItem>> GetAsync()
         {
             return _todoService.GetAllAsync();
         }
 
         [HttpGet("{id}")]
-        public async Task<TodoItem> GetById(string id)
+        public async Task<TodoItem> GetByIdAsync(string id)
         {
             var item = await _todoService.GetByIdAsync(id);
             return item ?? throw new InternalErrorException("item not found");
         }
 
         [HttpPost]
-        public Task<TodoItem> Create([FromBody] CreateTodoDto dto)
+        public Task<TodoItem> CreateAsync([FromBody] CreateTodoDto dto)
         {
             return _todoService.AddAsync(dto);
         }
 
         [HttpPut("{id}")]
-        public Task<TodoItem> Update([FromBody] UpdateTodoDto dto, string id)
+        public Task<TodoItem> UpdateAsync([FromBody] UpdateTodoDto dto, string id)
         {
             dto.Id = id;
             return _todoService.UpdateAsync(dto);
         }
 
         [HttpDelete("{id}")]
-        public async Task Delete(string id)
+        public async Task DeleteAsync(string id)
         {
             if (await _todoService.GetByIdAsync(id) == null)
             {

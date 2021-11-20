@@ -7,32 +7,32 @@ namespace Todo.API.Services
 {
     public class TodoService : ITodoService
     {
-        private readonly IRepository<TodoItem> _todoItems;
+        private readonly IRepository<TodoItem> _todoRepository;
 
         public TodoService(IRepository<TodoItem> todoItems)
         {
-            _todoItems = todoItems;
+            _todoRepository = todoItems;
         }
 
         public Task<TodoItem> AddAsync(CreateTodoDto dto)
         {
             var todo = new TodoItem { Title = dto.Title, Description = dto.Description };
-            return _todoItems.AddAsync(todo);
+            return _todoRepository.AddAsync(todo);
         }
 
         public Task DeleteByIdAsync(string id)
         {
-            return _todoItems.DeleteByIdAsync(id);
+            return _todoRepository.DeleteByIdAsync(id);
         }
 
         public Task<List<TodoItem>> GetAllAsync()
         {
-            return _todoItems.GetAllAsync();
+            return _todoRepository.GetAllAsync();
         }
 
         public Task<TodoItem> GetByIdAsync(string id)
         {
-            return _todoItems.GetByIdAsync(id);
+            return _todoRepository.GetByIdAsync(id);
         }
 
         public async Task<TodoItem> UpdateAsync(UpdateTodoDto dto)
@@ -40,7 +40,7 @@ namespace Todo.API.Services
             var todo = await GetByIdAsync(dto.Id);
             todo.Title = dto.Title;
             todo.Description = dto.Description; 
-            return await _todoItems.UpdateAsync(todo);
+            return await _todoRepository.UpdateAsync(todo);
         }
     }
 }
