@@ -22,6 +22,7 @@ namespace Todo.API.Repositories
         public async Task<T> AddAsync(T item)
         {
             item.CreatedOn = item.UpdatedOn = DateTimeOffset.Now;
+            item.CreatedBy = item.UpdatedBy = "sa";
             await _colection.InsertOneAsync(item);
             return item;
         }
@@ -49,6 +50,7 @@ namespace Todo.API.Repositories
         public async Task<T> UpdateAsync(T item)
         {
             item.CreatedOn = item.UpdatedOn = DateTimeOffset.Now;
+            item.UpdatedBy = "sa";
             await _colection.ReplaceOneAsync(x => x.Id == item.Id, item);
             return item;
         }
